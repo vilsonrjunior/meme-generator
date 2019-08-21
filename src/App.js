@@ -1,13 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import Header from './Components/Header'
+import MemeGenerator from './Components/MemeGenerator'
 
-function App() {
-  return (
-    <div className="App">
-      <h1>Hello world</h1>
+class App extends Component {
+  constructor() {
+    super()
+  }
+
+
+render() {
+   return(
+    <div>
+      <Header />
+      <MemeGenerator />
     </div>
-  );
+    )
+  }
 }
 
-export default App;
+export default App
