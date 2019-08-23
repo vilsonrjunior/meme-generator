@@ -60,9 +60,9 @@ render() {
             <button onClick={this.handleClick}>Gen</button>
           </form>
           <div className="meme">
-            <h2 className="top">{this.state.topText}</h2>
-            <img src={this.state.randomImage}/>
-            <h2 className="bottom">{this.state.bottomText}</h2>
+            <h2 onClick={this.handleClick} className="top">{this.state.topText}</h2>
+              <img src={this.state.randomImage} alt=""/>
+            <h2 onClick={this.handleClick} className="bottom">{this.state.bottomText}</h2>
           </div>
       </div>
     )

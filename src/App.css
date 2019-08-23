@@ -24,9 +24,10 @@ header > img {
 header > p {
     font-family: VT323, monospace;
     color: whitesmoke;
-    font-size: 50px;
+    font-size: 3vw;
     margin-left: 60px;
 }
+
 
 .meme {
     position: relative;
