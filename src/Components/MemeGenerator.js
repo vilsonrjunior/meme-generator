@@ -1,72 +1,65 @@
-import React, { Component } from "react"
+import React, { useState, useEffect } from "react"
 
-class MemeGenerator extends Component {
-  constructor() {
-    super()
-    this.state={
-      topText: "",
-      bottomText: "",
-      randomImage: "",
-      allMemeImgs: []
-    }
-    // this.handleChange = this.handleChange.bind(this)
-    // this.handleClick = this.handleClick.bind(this)
-  }
+export default function MemeGenerator() {
 
-componentDidMount() {
-  fetch("https://api.imgflip.com/get_memes")
-    .then(response => response.json())
-    .then(response => {
-      const {memes} = response.data
-      this.setState({ allMemeImgs: memes })
-    })
-}
+const [bottomText, setBottomText] = useState();
+const [topText, setTopText] = useState();
+const [allMemeImgs, setAllMemeImgs] = useState();
+const [randomImage, setRandomImage] = useState();
 
-handleChange = (event) => {
-  const {name, value} = event.target
-    this.setState({
-      [name]: value
-    })
-}
 
-handleClick = (event) => {
-  event.preventDefault()
-  const rand = Math.floor(Math.random() * this.state.allMemeImgs.length)
-  const randMemeImg = this.state.allMemeImgs[rand].url
-  this.setState({ randomImage: randMemeImg })
+useEffect(async () => {
+  const response = await fetch("https://api.imgflip.com/get_memes")
+  const data = await response.json();
+  const memes = data.data.memes
+  setAllMemeImgs(memes);
+}, []);
+
+function handleTop(e) {
+  const {value} = e.target
+  setTopText(value)
 }
 
 
-render() {
+function handleBottom(e) {
+  const {value} = e.target
+  setBottomText(value)
+}
+
+
+function handleClick(e) {
+     e.preventDefault()
+     const rand = Math.floor(Math.random() * allMemeImgs.length)
+     const randMemeImg = allMemeImgs[rand].url
+     setRandomImage(randMemeImg)
+ }
 
    return(
       <div>
-          <form className="meme-form">
-          <input
+        <form className="meme-form">
+         <input
               type="text"
-              value={this.state.topText}
+              value={topText}
               name="topText"
               placeholder="Top text"
-              onChange={this.handleChange}
+              onChange={handleTop}
               />
-          <input
+        <input
               type="text"
               className="bottom"
-              value={this.state.bottomText}
+              value={bottomText}
               name="bottomText"
               placeholder="Bottom text"
-              onChange={this.handleChange}
+              onChange={handleBottom}
               />
-            <button onClick={this.handleClick}>Gen</button>
+          <button onClick={handleClick}>Gen</button>
           </form>
           <div className="meme">
-            <h2 onClick={this.handleClick} className="top">{this.state.topText}</h2>
-              <img src={this.state.randomImage} alt=""/>
-            <h2 onClick={this.handleClick} className="bottom">{this.state.bottomText}</h2>
+             <h2 onClick={handleClick} className="top">{topText}</h2>
+                <img src={randomImage} />
+             <h2 onClick={handleClick} className="bottom">{bottomText}</h2>
           </div>
       </div>
     )
   }
-}
 
-export default MemeGenerator
